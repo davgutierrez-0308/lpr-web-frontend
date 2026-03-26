@@ -25,7 +25,7 @@ export default function EventsPage() {
 
     // Creamos conexión SSE
     const eventSource = new EventSource(
-      `http://localhost:3000/realtime/events?token=${token}`,
+      `https://veci-placa-backend.onrender.com/realtime/events?token=${token}`,
       {
         withCredentials: false,
       }
