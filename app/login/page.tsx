@@ -27,6 +27,8 @@ export default function LoginPage() {
       <div className="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
         <h1 className="text-2xl font-bold mb-6 text-center">
           Monitoreo de Placas Vehiculares
+          <br/>
+          Veci - Placa
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">

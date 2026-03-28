@@ -10,6 +10,7 @@ export interface PlateEvent {
   imageUrl?: string;
   isAlert: boolean;
   alertType?: "BLACKLIST" | "WATCHLIST";
+  vehicleUrl: string;
 }
 
 export interface SearchResponse {

@@ -22,7 +22,7 @@ export default function AppLayout({ children }: any) {
       {/* HEADER */}
       <header className="h-16 bg-white shadow flex items-center justify-between px-6">
         <div className="text-xl font-bold text-gray-800">
-          LPR Monitoring
+          Veci - Placa
         </div>
 
         <div className="relative">
@@ -52,9 +52,10 @@ export default function AppLayout({ children }: any) {
         {/* SIDEBAR */}
         <aside className="w-64 bg-gray-900 text-white hidden md:flex flex-col">
           <nav className="flex-1 p-4 space-y-2">
+            {/*
             <a href="/dashboard" className="block p-2 hover:bg-gray-800 rounded">
               Dashboard
-            </a>
+            </a>*/}
             <a href="/events" className="block p-2 hover:bg-gray-800 rounded">
               Eventos
             </a>
