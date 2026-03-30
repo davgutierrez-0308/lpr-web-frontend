@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useAuthStore } from "@/lib/auth-store";
+import EventDetailModal from "@/components/events/EventDetailModal";
 
 interface PlateEvent {
   id: string;
@@ -10,6 +11,10 @@ interface PlateEvent {
   cameraId: string;
   capturedAt: string;
   isAlert: boolean;
+
+  imageUrl?: string;
+  vehicleUrl?: string;
+  alertType?: string;
 }
 
 export default function EventsPage() {
@@ -20,12 +25,26 @@ export default function EventsPage() {
 
   const eventSourceRef = useRef<EventSource | null>(null);
 
+  const [selectedEvent, setSelectedEvent] = useState<PlateEvent | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (event: PlateEvent) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedEvent(null);
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     if (!token) return;
 
     // Creamos conexión SSE
     const eventSource = new EventSource(
       `https://veci-placa-backend.onrender.com/realtime/events?token=${token}`,
+      //`http://localhost:3000/realtime/events?token=${token}`,
       {
         withCredentials: false,
       }
@@ -42,10 +61,11 @@ export default function EventsPage() {
     };
 
     eventSource.onmessage = (event) => {
+      console.log(event.data);
       try {
         const parsed = JSON.parse(event.data);
-
-        if (parsed.type === "plate_event") {
+        console.log(parsed);
+        if (parsed.type === "plate_event") {          
           setEvents((prev) => [parsed.data, ...prev].slice(0, 100));
         }
       } catch {
@@ -83,6 +103,7 @@ export default function EventsPage() {
               <th className="p-3">Cámara</th>
               <th className="p-3">Fecha</th>
               <th className="p-3">Alerta</th>
+              <th className="p-3">Detalle</th>
             </tr>
           </thead>
           <tbody>
@@ -108,12 +129,20 @@ export default function EventsPage() {
                     "-"
                   )}
                 </td>
+                <td className="p-3">
+                  <button
+                    onClick={() => openModal(event)}
+                    className="px-2 py-1 bg-blue-500 text-white rounded"
+                  >
+                    Ver
+                  </button>
+                </td>
               </tr>
             ))}
 
             {events.length === 0 && (
               <tr>
-                <td colSpan={5} className="p-6 text-center text-gray-500">
+                <td colSpan={6} className="p-6 text-center text-gray-500">
                   Esperando eventos...
                 </td>
               </tr>
@@ -121,6 +150,11 @@ export default function EventsPage() {
           </tbody>
         </table>
       </div>
+      <EventDetailModal
+        event={selectedEvent}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 }

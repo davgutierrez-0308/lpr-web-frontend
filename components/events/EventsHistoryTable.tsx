@@ -2,11 +2,12 @@
 
 import { PlateEvent } from "@/lib/events-api";
 
-interface Props {
+type Props = {
   events: PlateEvent[];
+  onViewDetail: (event: PlateEvent) => void;
 }
 
-export default function EventsHistoryTable({ events }: Props) {
+export default function EventsHistoryTable({ events, onViewDetail }: Props) {
   return (
     <div className="bg-white rounded-xl shadow overflow-hidden">
       <table className="w-full text-sm">
@@ -17,6 +18,7 @@ export default function EventsHistoryTable({ events }: Props) {
             <th className="p-3">Cámara</th>
             <th className="p-3">Fecha</th>
             <th className="p-3">Alerta</th>
+            <th className="p-3">Detalle</th>
           </tr>
         </thead>
 
@@ -44,6 +46,14 @@ export default function EventsHistoryTable({ events }: Props) {
                 ) : (
                   "-"
                 )}
+              </td>
+              <td>
+                <button
+                  onClick={() => onViewDetail(event)}
+                  className="px-2 py-1 bg-blue-500 text-white rounded"
+                >
+                  Ver
+                </button>
               </td>
             </tr>
           ))}

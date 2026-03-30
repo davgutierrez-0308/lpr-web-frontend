@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { EventsApi, PlateEvent } from "@/lib/events-api";
 import EventsFilters from "@/components/events/EventsFilters";
 import EventsHistoryTable from "@/components/events/EventsHistoryTable";
+import EventDetailModal from "@/components/events/EventDetailModal";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -31,6 +32,19 @@ export default function EventsHistoryPage() {
 
   const handlePageChange = (newPage: number) => {
     load({ ...filters, page: newPage });
+  };
+
+  const [selectedEvent, setSelectedEvent] = useState<PlateEvent | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (event: PlateEvent) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedEvent(null);
+    setIsModalOpen(false);
   };
 
   // 🔥 EXPORT PDF
@@ -86,8 +100,14 @@ export default function EventsHistoryPage() {
 
       {/* 🔥 ENVOLVEMOS LA TABLA */}
       <div ref={tableRef}>
-        <EventsHistoryTable events={events} />
+        <EventsHistoryTable events={events} onViewDetail={openModal}/>
       </div>
+
+      <EventDetailModal
+        event={selectedEvent}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
 
       {meta && (
         <div className="mt-4 flex justify-between items-center">
