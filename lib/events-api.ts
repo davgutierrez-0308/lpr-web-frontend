@@ -9,7 +9,7 @@ export interface PlateEvent {
   capturedAt: string;
   imageUrl?: string;
   isAlert: boolean;
-  alertType?: "BLACKLIST" | "WATCHLIST";
+  alertType?: string;
   vehicleUrl: string;
 }
 
