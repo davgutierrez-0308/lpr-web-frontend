@@ -10,7 +10,7 @@ export interface PlateEvent {
   imageUrl?: string;
   isAlert: boolean;
   alertType?: string;
-  vehicleUrl: string;
+  vehicleUrl?: string;
 }
 
 export interface SearchResponse {
