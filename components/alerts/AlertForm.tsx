@@ -41,6 +41,7 @@ export default function AlertForm({ onSubmit }: Props) {
         >
           <option value="BLACKLIST">BLACKLIST</option>
           <option value="WATCHLIST">WATCHLIST</option>
+          <option value="WHITELIST">WHITELIST</option>
         </select>
 
         <input

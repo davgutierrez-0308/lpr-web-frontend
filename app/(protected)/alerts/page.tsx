@@ -36,6 +36,11 @@ export default function AlertsPage() {
     loadAlerts();
   };
 
+  const handleUpdate = async (id: string, data: any) => {
+    await AlertsApi.update(id, data);
+    loadAlerts();
+  };
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">
@@ -48,6 +53,7 @@ export default function AlertsPage() {
         alerts={alerts}
         onToggle={handleToggle}
         onDelete={handleDelete}
+        onUpdate={handleUpdate}
         isAdmin={isAdmin}
       />
     </div>

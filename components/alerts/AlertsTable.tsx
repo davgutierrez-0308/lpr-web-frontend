@@ -6,6 +6,9 @@ interface Props {
   alerts: AlertPlate[];
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
+  onUpdate: (id: string, 
+    data: { type: "BLACKLIST" | "WATCHLIST" | "WHITELIST" }
+  ) => void;
   isAdmin: boolean;
 }
 
@@ -13,6 +16,7 @@ export default function AlertsTable({
   alerts,
   onToggle,
   onDelete,
+  onUpdate,
   isAdmin,
 }: Props) {
   return (
@@ -33,13 +37,21 @@ export default function AlertsTable({
             <tr key={alert.id} className="border-t">
               <td className="p-3 font-semibold">{alert.plate}</td>
               <td className="p-3">
-                {alert.type === "BLACKLIST" ? (
-                  <span className="text-red-600 font-bold">
-                    BLACKLIST
-                  </span>
+                {isAdmin ? (
+                  <select
+                    value={alert.type}
+                    onChange={(e) =>
+                      onUpdate(alert.id, { type: e.target.value })
+                    }
+                    className="border rounded px-2 py-1"
+                  >
+                    <option value="BLACKLIST">BLACKLIST</option>
+                    <option value="WATCHLIST">WATCHLIST</option>
+                    <option value="WHITELIST">WHITELIST</option>
+                  </select>
                 ) : (
-                  <span className="text-yellow-600 font-bold">
-                    WATCHLIST
+                  <span>
+                    {alert.type}
                   </span>
                 )}
               </td>

@@ -3,7 +3,7 @@ import api from "./api";
 export interface AlertPlate {
   id: string;
   plate: string;
-  type: "BLACKLIST" | "WATCHLIST";
+  type: "BLACKLIST" | "WATCHLIST" | "WHITELIST";
   description?: string;
   enabled: boolean;
   createdAt: string;
@@ -17,7 +17,7 @@ export const AlertsApi = {
 
   async create(data: {
     plate: string;
-    type: "BLACKLIST" | "WATCHLIST";
+    type: "BLACKLIST" | "WATCHLIST" | "WHITELIST";
     description?: string;
   }) {
     const res = await api.post("/alerts", data);
@@ -36,5 +36,5 @@ export const AlertsApi = {
 
   async remove(id: string) {
     await api.delete(`/alerts/${id}`);
-  },
+  }
 };
