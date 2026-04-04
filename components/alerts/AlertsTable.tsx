@@ -12,6 +12,8 @@ interface Props {
   isAdmin: boolean;
 }
 
+type AlertType = "BLACKLIST" | "WATCHLIST" | "WHITELIST";
+
 export default function AlertsTable({
   alerts,
   onToggle,
@@ -41,7 +43,7 @@ export default function AlertsTable({
                   <select
                     value={alert.type}
                     onChange={(e) =>
-                      onUpdate(alert.id, { type: e.target.value })
+                      onUpdate(alert.id, { type: e.target.value as AlertType })
                     }
                     className="border rounded px-2 py-1"
                   >
